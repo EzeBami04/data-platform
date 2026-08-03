@@ -34,7 +34,7 @@ jobs:
       - name: Install sqlfluff
         run: pip install sqlfluff
       - name: sqlfluff lint
-        run: sqlfluff lint sql/ dbt/models --dialect postgres
+        run: sqlfluff lint sql/ qntplatform/models --dialect mssql
 
   yaml-lint:
     runs-on: ubuntu-latest

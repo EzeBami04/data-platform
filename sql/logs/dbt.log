@@ -1,0 +1,92 @@
+[0m18:43:33.178669 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E56177F510>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E56177D310>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E56177E290>]}
+
+
+============================== 18:43:33.197670 | 5672f3d3-25c9-4f78-8ddf-d153a141a392 ==============================
+[0m18:43:33.197670 [info ] [MainThread]: Running with dbt=1.12.0
+[0m18:43:33.211667 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'maximum_seed_size_mib': '1', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'static_parser': 'True', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': 'C:\\Users\\Bamidele\\.dbt', 'indirect_selection': 'eager', 'hints_enabled': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'invocation_command': 'dbt init', 'log_path': 'logs'}
+[0m18:43:52.402817 [debug] [MainThread]: Starter project path: C:\Users\Bamidele\Documents\data-proj\data-platform\data\Lib\site-packages\dbt\include\starter_project
+[0m18:43:52.519734 [info ] [MainThread]: Setting up your profile.
+[0m18:48:47.797910 [info ] [MainThread]: Profile qntplatform written to C:\Users\Bamidele\.dbt\profiles.yml using target's profile_template.yml and your supplied values.
+[0m18:48:47.808910 [info ] [MainThread]: Running dbt debug to validate the project...
+[0m18:48:47.811907 [info ] [MainThread]: dbt version: 1.12.0
+[0m18:48:47.814906 [info ] [MainThread]: python version: 3.11.4
+[0m18:48:47.818910 [info ] [MainThread]: python path: C:\Users\Bamidele\Documents\data-proj\data-platform\data\Scripts\python.exe
+[0m18:48:47.822908 [info ] [MainThread]: os info: Windows-10-10.0.19045-SP0
+[0m18:48:48.142900 [info ] [MainThread]: Using profiles dir at C:\Users\Bamidele\.dbt
+[0m18:48:48.143899 [info ] [MainThread]: Using profiles.yml file at C:\Users\Bamidele\.dbt\profiles.yml
+[0m18:48:48.144901 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\Bamidele\Documents\data-proj\data-platform\sql\qntplatform\dbt_project.yml
+[0m18:48:48.146899 [info ] [MainThread]: adapter type: bigquery
+[0m18:48:48.147900 [info ] [MainThread]: adapter version: 1.12.0
+[0m18:48:48.407897 [info ] [MainThread]: Configuration:
+[0m18:48:48.408894 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m18:48:48.410896 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m18:48:48.412896 [info ] [MainThread]: Required dependencies:
+[0m18:48:48.414897 [debug] [MainThread]: Executing "git --help"
+[0m18:48:48.538527 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m18:48:48.540528 [debug] [MainThread]: STDERR: "b''"
+[0m18:48:48.542527 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m18:48:48.543526 [info ] [MainThread]: Connection:
+[0m18:48:48.545528 [info ] [MainThread]:   method: service-account
+[0m18:48:48.548530 [info ] [MainThread]:   database: seismic-gecko-487920-t3
+[0m18:48:48.549529 [info ] [MainThread]:   execution_project: seismic-gecko-487920-t3
+[0m18:48:48.552532 [info ] [MainThread]:   schema: quantumb
+[0m18:48:48.554528 [info ] [MainThread]:   location: US
+[0m18:48:48.557531 [info ] [MainThread]:   priority: interactive
+[0m18:48:48.561530 [info ] [MainThread]:   maximum_bytes_billed: None
+[0m18:48:48.570529 [info ] [MainThread]:   reservation: None
+[0m18:48:48.584206 [info ] [MainThread]:   impersonate_service_account: None
+[0m18:48:48.586202 [info ] [MainThread]:   job_retry_deadline_seconds: None
+[0m18:48:48.590115 [info ] [MainThread]:   job_retries: 1
+[0m18:48:48.593625 [info ] [MainThread]:   job_creation_timeout_seconds: None
+[0m18:48:48.596854 [info ] [MainThread]:   job_execution_timeout_seconds: 300
+[0m18:48:48.603166 [info ] [MainThread]:   job_link_info_level_log: False
+[0m18:48:48.604742 [info ] [MainThread]:   timeout_seconds: 300
+[0m18:48:48.607736 [info ] [MainThread]:   client_id: None
+[0m18:48:48.614701 [info ] [MainThread]:   token_uri: None
+[0m18:48:48.618159 [info ] [MainThread]:   compute_region: None
+[0m18:48:48.620475 [info ] [MainThread]:   dataproc_cluster_name: None
+[0m18:48:48.622082 [info ] [MainThread]:   gcs_bucket: None
+[0m18:48:48.624819 [info ] [MainThread]:   dataproc_batch: None
+[0m18:48:48.627837 [info ] [MainThread]: Registered adapter: bigquery=1.12.0
+[0m18:48:50.352112 [debug] [MainThread]: Acquiring new bigquery connection 'debug'
+[0m18:48:50.353109 [debug] [MainThread]: On debug: select 1 as id
+[0m18:48:50.355111 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m18:48:50.357108 [debug] [MainThread]: BigQuery adapter: Got an error when attempting to create a bigquery " "client: '[Errno 22] Invalid argument: '"C:\\Users\\Bamidele\\Downloads\\seismic-gecko-487920-t3-f0c98dd52497.json"''
+[0m18:48:50.359107 [debug] [MainThread]: BigQuery adapter: Unhandled error while running:
+select 1 as id
+[0m18:48:50.361108 [debug] [MainThread]: BigQuery adapter: Database Error
+  [Errno 22] Invalid argument: '"C:\\Users\\Bamidele\\Downloads\\seismic-gecko-487920-t3-f0c98dd52497.json"'
+[0m18:48:50.362112 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m18:48:50.364109 [info ] [MainThread]: [31m1 check failed:[0m
+[0m18:48:50.366108 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >'NoneType' object has no attribute 'close'
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m18:48:50.368111 [info ] [MainThread]: Your new dbt project "qntplatform" was created!
+Initialized new project in C:\Users\Bamidele\Documents\data-proj\data-platform\sql\qntplatform\qntplatform
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m18:48:50.372108 [info ] [MainThread]: [31mYour profile may need adjustments. You can find the logs of `dbt debug` above[0m
+[0m18:48:50.380110 [debug] [MainThread]: Command `dbt init` succeeded at 18:48:50.380110 after 317.85 seconds
+[0m18:48:50.383108 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E5616B6390>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E561765250>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E5616A3590>]}
+[0m18:48:50.386109 [debug] [MainThread]: Flushing usage events
+[0m18:48:51.625494 [debug] [MainThread]: An error was encountered while trying to flush usage events

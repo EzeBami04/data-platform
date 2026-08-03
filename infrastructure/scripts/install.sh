@@ -11,10 +11,10 @@
 
 set -euo pipefail
 
-REPO_URL="${REPO_URL:-git@github.com:your-org/data-platform.git}"
+REPO_URL="${REPO_URL:-git@github.com:Ezebami04/data-platform.git}"
 APP_DIR="${APP_DIR:-/opt/data-platform}"
 DOMAIN_NAME="${DOMAIN_NAME:?Set DOMAIN_NAME, e.g. DOMAIN_NAME=airflow.example.com}"
-CERTBOT_EMAIL="${CERTBOT_EMAIL:?Set CERTBOT_EMAIL, e.g. CERTBOT_EMAIL=you@example.com}"
+CERTBOT_EMAIL="${CERTBOT_EMAIL:?Set CERTBOT_EMAIL, e.g. CERTBOT_EMAIL=example@gmail.com}"
 
 echo "== 1. System update =="
 sudo apt-get update -y && sudo apt-get upgrade -y
