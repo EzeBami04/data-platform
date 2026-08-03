@@ -1,0 +1,97 @@
+version: '3.9'
+
+x-airflow-common:
+  &airflow-common
+  build:
+    context: ../.
+    dockerfile: Dockerfile
+  env_file:
+    - .env
+  environment:
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+
+    AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+
+    AIRFLOW__CORE__FERNET_KEY: ${FERNET_KEY}
+
+    AIRFLOW__WEBSERVER__SECRET_KEY: ${SECRET_KEY}
+
+    AIRFLOW_UID: 50000
+
+  volumes:
+    - ./airflow/dags:/opt/airflow/dags
+    - ./airflow/logs:/opt/airflow/logs
+    - ./airflow/plugins:/opt/airflow/plugins
+    - ./python:/opt/airflow/python
+    - ./dbt:/opt/airflow/dbt
+
+  depends_on:
+    postgres:
+      condition: service_healthy
+
+services:
+
+  postgres:
+    image: postgres:16
+
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 10s
+      retries: 5
+
+  airflow-init:
+
+    <<: *airflow-common
+
+    command: >
+      bash -c "
+      airflow db migrate &&
+      airflow users create
+      --username admin
+      --firstname Admin
+      --lastname User
+      --role Admin
+      --email analys***@gmail.com
+      --password admin
+      "
+
+  airflow-webserver:
+
+    <<: *airflow-common
+
+    command: webserver
+
+    restart: always
+
+    ports:
+      - "8080:8080"
+
+  airflow-scheduler:
+
+    <<: *airflow-common
+
+    command: scheduler
+
+    restart: always
+
+  airflow-triggerer:
+
+    <<: *airflow-common
+
+    command: triggerer
+
+    restart: always
+
+volumes:
+
+  postgres-db-volume:

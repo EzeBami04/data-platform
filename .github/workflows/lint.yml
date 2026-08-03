@@ -1,0 +1,46 @@
+# .github/workflows/lint.yml
+# Static checks only — no build, no containers. Fast feedback on every PR.
+
+name: Lint
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  python-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install linters
+        run: pip install black flake8 isort
+      - name: black --check
+        run: black --check python/ airflow/dags/
+      - name: isort --check
+        run: isort --check-only python/ airflow/dags/
+      - name: flake8
+        run: flake8 python/ airflow/dags/ --max-line-length=100
+
+  sql-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install sqlfluff
+        run: pip install sqlfluff
+      - name: sqlfluff lint
+        run: sqlfluff lint sql/ dbt/models --dialect postgres
+
+  yaml-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: yamllint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: infrastructure/docker/docker-compose.yml .github/workflows

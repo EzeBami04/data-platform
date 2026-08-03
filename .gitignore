@@ -1,0 +1,3 @@
+data/
+airflow/logs/
+.env

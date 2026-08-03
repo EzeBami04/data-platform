@@ -1,0 +1,36 @@
+# .github/workflows/deploy.yml
+# Deploys to the GCE VM on every push to main, by SSH-ing in and running
+# the same deploy.sh a human would run by hand.
+#
+# Required repo secrets:
+#   GCP_SA_KEY      - JSON key for a service account with compute.osLogin / SSH access
+#   GCP_PROJECT_ID
+#   GCP_ZONE
+#   GCP_VM_NAME
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: []
+    steps:
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: SSH in and run deploy.sh
+        run: |
+          gcloud compute ssh "${{ secrets.GCP_VM_NAME }}" \
+            --zone="${{ secrets.GCP_ZONE }}" \
+            --project="${{ secrets.GCP_PROJECT_ID }}" \
+            --command="bash /opt/data-platform/infrastructure/scripts/deploy.sh"

@@ -1,0 +1,14 @@
+dbt-core
+dbt-bigquery
+pandas
+requests
+beautifulsoup4
+sqlalchemy
+selenium
+google-auth
+google-cloud-storage
+google-cloud-bigquery
+google-cloud-secret-manager
+apache-airflow-providers-google
+apache-airflow-providers-postgres
+psycopg2-binary
