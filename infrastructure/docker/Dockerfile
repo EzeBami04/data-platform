@@ -26,7 +26,7 @@ COPY airflow/plugins /opt/airflow/plugins
 COPY airflow/include /opt/airflow/include
 
 COPY python /opt/airflow/python
-COPY dbt /opt/airflow/dbt
+COPY dbt /opt/sql/qntplatform
 
 
 ENV PYTHONPATH="/opt/airflow/python:${PYTHONPATH}"
