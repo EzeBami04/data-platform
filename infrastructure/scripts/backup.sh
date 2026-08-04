@@ -10,7 +10,7 @@
 
 set -euo pipefail
 
-APP_DIR="${APP_DIR:-/opt/data-platform}"
+APP_DIR="${APP_DIR:-/airflow}"
 COMPOSE_DIR="$APP_DIR/infrastructure/docker"
 BUCKET="${GCS_BACKUP_BUCKET:?Set GCS_BACKUP_BUCKET, e.g. gs://your-airflow-backups}"
 RETENTION_DAYS="${RETENTION_DAYS:-14}"

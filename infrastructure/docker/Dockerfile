@@ -24,11 +24,13 @@ RUN pip install --no-cache-dir \
 COPY airflow/dags /opt/airflow/dags
 COPY airflow/plugins /opt/airflow/plugins
 COPY airflow/include /opt/airflow/include
-
 COPY python /opt/airflow/python
-COPY sql /opt/sql/qntplatform
+COPY sql/qntplatform /opt/airflow/dbt
+COPY infrastructure/docker/entrypoint.sh /opt/airflow/entrypoint.sh
+RUN chmod +x /opt/airflow/entrypoint.sh
 
 
 ENV PYTHONPATH="/opt/airflow/python:${PYTHONPATH}"
+ENTRYPOINT ["/opt/airflow/entrypoint.sh"]
 
 WORKDIR /opt/airflow

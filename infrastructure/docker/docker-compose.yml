@@ -10,22 +10,20 @@ x-airflow-common:
   environment:
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
 
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@${AIRFLOW__DATABASE__SQL_ALCHEMY_CONN:-postgresql+psycopg2://airflow:airflow@postgres:5432/airflow}
 
     AIRFLOW__CORE__LOAD_EXAMPLES: "False"
 
     AIRFLOW__CORE__FERNET_KEY: ${FERNET_KEY}
 
-    AIRFLOW__WEBSERVER__SECRET_KEY: ${SECRET_KEY}
-
-    AIRFLOW_UID: 50000
+    AIRFLOW__WEBSERVER__SECRET_KEY: ${SECRET_KEY}\r\n    DBT_PROFILES_DIR: /opt/airflow/dbt\r\n    AIRFLOW_UID: 50000
 
   volumes:
     - ./airflow/dags:/opt/airflow/dags
     - ./airflow/logs:/opt/airflow/logs
     - ./airflow/plugins:/opt/airflow/plugins
     - ./python:/opt/airflow/python
-    - ./dbt:/opt/airflow/dbt
+    - ../../sql/qntplatform:/opt/airflow/dbt
 
   depends_on:
     postgres:
@@ -95,3 +93,10 @@ services:
 volumes:
 
   postgres-db-volume:
+
+
+
+
+
+
+

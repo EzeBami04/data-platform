@@ -1,0 +1,14 @@
+qntplatform:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: "${{ secrets.GCP_PROJECT_ID }}"
+      dataset: "${{ secrets.BQ_DATASET }}"
+      location: US
+      threads: 1
+      timeout_seconds: 300
+      priority: interactive
+      retries: 1
+      keyfile: /opt/airflow/dbt/credentials.json

@@ -12,7 +12,7 @@
 set -euo pipefail
 
 REPO_URL="${REPO_URL:-git@github.com:Ezebami04/data-platform.git}"
-APP_DIR="${APP_DIR:-/opt/data-platform}"
+APP_DIR="${APP_DIR:-/airflow}"
 DOMAIN_NAME="${DOMAIN_NAME:?Set DOMAIN_NAME, e.g. DOMAIN_NAME=airflow.example.com}"
 CERTBOT_EMAIL="${CERTBOT_EMAIL:?Set CERTBOT_EMAIL, e.g. CERTBOT_EMAIL=example@gmail.com}"
 
