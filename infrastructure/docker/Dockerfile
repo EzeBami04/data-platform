@@ -26,11 +26,11 @@ COPY airflow/dags /opt/airflow/dags
 # COPY airflow/include /opt/airflow/include
 COPY python /opt/python
 COPY sql/qntplatform /opt/airflow/dbt
-COPY infrastructure/docker/entrypoint.sh /opt/airflow/entrypoint.sh
-RUN chmod +x /opt/airflow/entrypoint.sh
+COPY infrastructure/docker/entrypoint.sh /opt/infrastructure/docker/entrypoint.sh
+RUN chmod +x /opt/infrastructure/docker/entrypoint.sh
 
 
-ENV PYTHONPATH="/opt/airflow/python:${PYTHONPATH}"
-ENTRYPOINT ["/opt/airflow/entrypoint.sh"]
+ENV PYTHONPATH="/opt/python:${PYTHONPATH}"
+ENTRYPOINT ["/opt/infrastructure/docker/entrypoint.sh"]
 
 WORKDIR /opt/airflow
