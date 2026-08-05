@@ -16,7 +16,7 @@ x-airflow-common:
 
     AIRFLOW__CORE__FERNET_KEY: ${FERNET_KEY}
 
-    AIRFLOW__WEBSERVER__SECRET_KEY: ${SECRET_KEY}\r\n    DBT_PROFILES_DIR: /opt/sql/quantumb\r\n    AIRFLOW_UID: 50000
+    AIRFLOW__WEBSERVER__SECRET_KEY: ${SECRET_KEY}\r\n    DBT_PROFILES_DIR: /opt/sql/qntplatform\r\n    AIRFLOW_UID: 50000
 
   volumes:
     - ./airflow/dags:/opt/airflow/dags
