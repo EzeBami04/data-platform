@@ -22,9 +22,9 @@ RUN pip install --no-cache-dir \
 
 # Copy project code
 COPY airflow/dags /opt/airflow/dags
-COPY airflow/plugins /opt/airflow/plugins
-COPY airflow/include /opt/airflow/include
-COPY python /opt/airflow/python
+# COPY airflow/plugins /opt/airflow/plugins
+# COPY airflow/include /opt/airflow/include
+COPY python /opt/python
 COPY sql/qntplatform /opt/airflow/dbt
 COPY infrastructure/docker/entrypoint.sh /opt/airflow/entrypoint.sh
 RUN chmod +x /opt/airflow/entrypoint.sh
