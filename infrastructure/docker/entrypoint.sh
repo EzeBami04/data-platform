@@ -11,9 +11,9 @@
 
 set -euo pipefail
 
-# Step 1 runs as root (container starts as root before Airflow's entrypoint drops privileges)
+# Step 1 runs as root (container starts as root before Airflow's entrypoint drops privileges) /opt/airflow/plugins
 if [ "$(id -u)" = "0" ]; then
-  chown -R airflow: /opt/airflow/logs /opt/airflow/dags /opt/airflow/plugins 2>/dev/null || true
+  chown -R airflow: /opt/airflow/logs /opt/airflow/dags  2>/dev/null || true
   exec gosu airflow "$0" "$@"
 fi
 
