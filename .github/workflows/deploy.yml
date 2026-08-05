@@ -33,4 +33,4 @@ jobs:
           gcloud compute ssh "${{ secrets.GCP_VM_NAME }}" \
             --zone="${{ secrets.GCP_ZONE }}" \
             --project="${{ secrets.GCP_PROJECT_ID }}" \
-            --command="bash /airflow/infrastructure/scripts/deploy.sh"
+            --command="bash /scripts/deploy.sh"
