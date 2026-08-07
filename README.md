@@ -51,7 +51,7 @@ The deploy script will:
 
 After a successful install and deploy, your Airflow UI will be available at:
 
-https://orch.quantumbdata.org
+https://replace_with_your_targeted_subdomain
 
 ## dbt integration
 
