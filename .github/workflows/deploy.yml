@@ -28,9 +28,9 @@ jobs:
       - name: Set up gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: SSH in and run deploy.sh
+      - name: SSH in and run deploy.sh (diagnostic)
         run: |
           gcloud compute ssh "${{ secrets.GCP_VM_NAME }}" \
             --zone="${{ secrets.GCP_ZONE }}" \
             --project="${{ secrets.GCP_PROJECT_ID }}" \
-            --command="bash infrastructure/scripts/deploy.sh"
+            --command="bash -lc 'pwd; whoami; ls -la /airflow || true; if [ -f /airflow/infrastructure/scripts/deploy.sh ]; then bash /airflow/infrastructure/scripts/deploy.sh; else echo \"ERROR: /airflow/infrastructure/scripts/deploy.sh not found\" >&2; exit 1; fi'"
