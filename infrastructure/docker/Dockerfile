@@ -26,9 +26,9 @@ COPY airflow/dags /opt/airflow/dags
 # COPY airflow/include /opt/airflow/include
 COPY python /opt/python
 COPY sql/qntplatform /opt/airflow/dbt
-COPY infrastructure/docker/entrypoint.sh /opt/infrastructure/docker/entrypoint.sh
-RUN chmod +x /opt/infrastructure/docker/entrypoint.sh
-
+# Use BuildKit's COPY --chmod to set executable mode at copy time. This avoids
+# running chmod at build-time which can fail on some builders or filesystems.
+COPY --chmod=0755 infrastructure/docker/entrypoint.sh /opt/infrastructure/docker/entrypoint.sh
 
 ENV PYTHONPATH="/opt/python:${PYTHONPATH}"
 ENTRYPOINT ["/opt/infrastructure/docker/entrypoint.sh"]
