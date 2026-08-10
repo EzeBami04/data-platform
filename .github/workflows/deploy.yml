@@ -21,7 +21,13 @@ jobs:
 
       - name: Deploy to VM
         run: |
+          gcloud compute scp \
+            infrastructure/docker/compose.yml \
+            "${{ secrets.GCP_VM_NAME }}:/home/analystbami30/airflow/compose.yml" \
+            --zone="${{ secrets.GCP_ZONE }}" \
+            --project="${{ secrets.GCP_PROJECT_ID }}"
+
           gcloud compute ssh "${{ secrets.GCP_VM_NAME }}" \
             --zone="${{ secrets.GCP_ZONE }}" \
             --project="${{ secrets.GCP_PROJECT_ID }}" \
-            --command="cd /home/analystbami30/airflow && bash deploy.sh"
+            --command="bash /home/analystbami30/airflow/deploy.sh"
