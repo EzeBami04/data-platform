@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
@@ -19,7 +23,7 @@ jobs:
       - name: Set up gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Deploy to VM
+      - name: Copy Compose file to VM
         run: |
           gcloud compute scp \
             infrastructure/docker/compose.yml \
@@ -27,6 +31,8 @@ jobs:
             --zone="${{ secrets.GCP_ZONE }}" \
             --project="${{ secrets.GCP_PROJECT_ID }}"
 
+      - name: Deploy to VM
+        run: |
           gcloud compute ssh "${{ secrets.GCP_VM_NAME }}" \
             --zone="${{ secrets.GCP_ZONE }}" \
             --project="${{ secrets.GCP_PROJECT_ID }}" \

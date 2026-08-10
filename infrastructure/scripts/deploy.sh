@@ -7,7 +7,7 @@
 set -euo pipefail
 
 APP_DIR="${APP_DIR:-/airflow}"
-COMPOSE_DIR="$APP_DIR/infrastructure/docker"
+COMPOSE_DIR="$APP_DIR"
 COMPOSE_FILE="$COMPOSE_DIR/docker-compose.yml"
 
 cd "$APP_DIR"
