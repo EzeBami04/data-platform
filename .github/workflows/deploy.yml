@@ -25,10 +25,11 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Copy Compose file to VM
+      
         run: |
           gcloud compute scp \
             infrastructure/docker/compose.yml \
-            "${{ secrets.GCP_VM_NAME }}:/home/analystbami30/airflow/compose.yml" \
+            "ezekiel_sanmabo@${{ secrets.GCP_VM_NAME }}:/home/analystbami30/airflow/compose.yml" \
             --zone="${{ secrets.GCP_ZONE }}" \
             --project="${{ secrets.GCP_PROJECT_ID }}"
 
