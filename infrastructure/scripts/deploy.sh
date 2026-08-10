@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# infrastructure/scripts/deploy.sh
+# infrastructur
 #
 # (Re)deploys the Airflow stack from the current state of the main branch.
 # Idempotent — safe to run repeatedly, including from CI/CD.
