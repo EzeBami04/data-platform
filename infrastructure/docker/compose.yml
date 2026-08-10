@@ -1,27 +1,24 @@
-version: '3.9'
+version: "3.9"
 
-x-airflow-common:
-  &airflow-common
+x-airflow-common: &airflow-common
   image: ${AIRFLOW_IMAGE}
+
   env_file:
     - .env
+
   environment:
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
-
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
-
     AIRFLOW__CORE__LOAD_EXAMPLES: "False"
-
     AIRFLOW__CORE__FERNET_KEY: ${FERNET_KEY}
-
-    AIRFLOW__WEBSERVER__SECRET_KEY: ${SECRET_KEY}\r\n    
-    DBT_PROFILES_DIR: /opt/sql/qntplatform\r\n    
-    AIRFLOW_UID: 50000
-
+    AIRFLOW__WEBSERVER__SECRET_KEY: ${SECRET_KEY}
+    DBT_PROFILES_DIR: /opt/airflow/dbt
+    AIRFLOW_UID: "50000"
 
   depends_on:
     postgres:
       condition: service_healthy
+
 
 services:
 
@@ -39,10 +36,11 @@ services:
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 10s
+      timeout: 5s
       retries: 5
 
-  airflow-init:
 
+  airflow-init:
     <<: *airflow-common
 
     command: >
@@ -53,32 +51,30 @@ services:
       --firstname Admin
       --lastname User
       --role Admin
-      --email ${EMAIL}
-      --password ${PASSWORD}
+      --email '${EMAIL}'
+      --password '${ADMIN_PASSWORD}'
       "
 
+
   airflow-api-server:
-  <<: *airflow-common
-  command: api-server
-  restart: always
-  ports:
-    - "8080:8080"
+    <<: *airflow-common
+
+    command: api-server
+
+    restart: always
+
+    ports:
+      - "8080:8080"
+
 
   airflow-scheduler:
-
     <<: *airflow-common
 
     command: scheduler
 
     restart: always
 
-  airflow-triggerer:
 
-    <<: *airflow-common
-
-    command: triggerer
-
-    restart: always
   airflow-dag-processor:
     <<: *airflow-common
 
@@ -86,7 +82,15 @@ services:
 
     restart: always
 
+
+  airflow-triggerer:
+    <<: *airflow-common
+
+    command: triggerer
+
+    restart: always
+
+
 volumes:
 
   postgres-db-volume:
-
