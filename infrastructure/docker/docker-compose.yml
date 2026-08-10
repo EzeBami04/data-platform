@@ -2,15 +2,13 @@ version: '3.9'
 
 x-airflow-common:
   &airflow-common
-  build:
-    context: ../.
-    dockerfile: Dockerfile
+  image: ${AIRFLOW_IMAGE}
   env_file:
     - .env
   environment:
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
 
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@${AIRFLOW__DATABASE__SQL_ALCHEMY_CONN:-postgresql+psycopg2://airflow:airflow@postgres:5432/airflow}
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
 
     AIRFLOW__CORE__LOAD_EXAMPLES: "False"
 
@@ -20,12 +18,6 @@ x-airflow-common:
     DBT_PROFILES_DIR: /opt/sql/qntplatform\r\n    
     AIRFLOW_UID: 50000
 
-  volumes:
-    - ./airflow/dags:/opt/airflow/dags
-    - ./airflow/logs:/opt/airflow/logs
-    - ./airflow/plugins:/opt/airflow/plugins
-    - ./python:/opt/airflow/python
-    - ../../sql/qntplatform:/opt/airflow/dbt
 
   depends_on:
     postgres:
@@ -61,20 +53,16 @@ services:
       --firstname Admin
       --lastname User
       --role Admin
-      --email analys***@gmail.com
-      --password admin
+      --email ${EMAIL}
+      --password ${PASSWORD}
       "
 
-  airflow-webserver:
-
-    <<: *airflow-common
-
-    command: webserver
-
-    restart: always
-
-    ports:
-      - "8080:8080"
+  airflow-api-server:
+  <<: *airflow-common
+  command: api-server
+  restart: always
+  ports:
+    - "8080:8080"
 
   airflow-scheduler:
 
@@ -91,9 +79,14 @@ services:
     command: triggerer
 
     restart: always
+  airflow-dag-processor:
+    <<: *airflow-common
+
+    command: dag-processor
+
+    restart: always
 
 volumes:
 
   postgres-db-volume:
 
-  
