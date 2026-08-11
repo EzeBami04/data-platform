@@ -35,7 +35,7 @@ jobs:
 
       - name: Deploy to VM
         run: |
-          gcloud compute ssh "${{ secrets.GCP_VM_NAME }}" \
+          gcloud compute ssh "analystbami30@${{ secrets.GCP_VM_NAME }}" \
             --zone="${{ secrets.GCP_ZONE }}" \
             --project="${{ secrets.GCP_PROJECT_ID }}" \
             --command="bash /home/analystbami30/airflow/deploy.sh"
