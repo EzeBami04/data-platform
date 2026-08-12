@@ -8,7 +8,27 @@ on:
   workflow_dispatch:
 
 jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${{ secrets.GCP_ZONE }}-docker.pkg.dev
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: infrastructure/docker/Dockerfile
+          push: true
+          tags: ${{ secrets.GCP_ZONE }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/airflow/airflow:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
   deploy:
+    needs: build-and-push
     runs-on: ubuntu-latest
 
     steps:
@@ -39,3 +59,6 @@ jobs:
             --zone="${{ secrets.GCP_ZONE }}" \
             --project="${{ secrets.GCP_PROJECT_ID }}" \
             --command="bash /home/analystbami30/airflow/deploy.sh"
+
+            - name: Copy deploy script to VM
+        

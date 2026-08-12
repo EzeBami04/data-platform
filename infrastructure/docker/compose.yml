@@ -1,5 +1,4 @@
-version: "3.9"
-
+name: airflow
 x-airflow-common: &airflow-common
   image: ${AIRFLOW_IMAGE}
 
@@ -21,28 +20,25 @@ x-airflow-common: &airflow-common
 
 
 services:
-
   postgres:
     image: postgres:16
-
+    restart: unless-stopped   # add — currently missing, won't survive a VM reboot
+    mem_limit: 512m           # add — tune after checking `docker stats` on the VM
+    cpus: 0.5                 # add
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
-
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
-
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-
   airflow-init:
     <<: *airflow-common
-
     command: >
       bash -c "
       airflow db migrate &&
@@ -55,26 +51,21 @@ services:
       --password '${ADMIN_PASSWORD}'
       "
 
-
   airflow-api-server:
     <<: *airflow-common
-
     command: api-server
-
     restart: always
-
+    mem_limit: 1g              # add
+    cpus: 1.0                  # add
     ports:
       - "8080:8080"
 
-
   airflow-scheduler:
     <<: *airflow-common
-
     command: scheduler
-
     restart: always
-
-
+    mem_limit: 512m            # add
+    cpus: 0.5                  # add
   airflow-dag-processor:
     <<: *airflow-common
 
