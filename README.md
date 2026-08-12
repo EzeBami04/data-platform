@@ -19,7 +19,7 @@ The VM should host the repository at /airflow and run Docker Compose from /airfl
 On a fresh Debian/Ubuntu VM, run:
 
 `ash
-DOMAIN_NAME=orch.quantumbdata.org \
+DOMAIN_NAME=your_subdomain_attached_to_the_ui \
 CERTBOT_EMAIL=you@example.com \
 REPO_URL=git@github.com:Ezebami04/data-platform.git \
 bash /airflow/infrastructure/scripts/install.sh
