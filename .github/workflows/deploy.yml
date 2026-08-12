@@ -18,6 +18,10 @@ jobs:
       - uses: google-github-actions/setup-gcloud@v2
       - name: Configure Docker for Artifact Registry
         run: gcloud auth configure-docker ${{ secrets.GCP_ZONE }}-docker.pkg.dev
+
+      - name: Set up Docker Buildx        # <-- missing step, add this
+        uses: docker/setup-buildx-action@v3
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
@@ -27,6 +31,7 @@ jobs:
           tags: ${{ secrets.GCP_ZONE }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/airflow/airflow:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest

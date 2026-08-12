@@ -30,29 +30,37 @@ jobs:
           cache-to: type=gha,mode=max
           load: true
 
+      - name: Write DAG validation script
+        run: |
+          mkdir -p ci
+          cat > ci/validate_dags.py <<'EOF'
+          import sys
+          from airflow.models import DagBag
+
+          db = DagBag(dag_folder='/opt/airflow/dags', include_examples=False)
+          if db.import_errors:
+              for f, e in db.import_errors.items():
+                  print(f'{f}: {e}')
+              sys.exit(1)
+          print(f'{len(db.dags)} DAG(s) imported successfully')
+          EOF
+
       - name: Validate DAGs import without errors
         run: |
           docker run --rm \
             -v ${{ github.workspace }}/airflow/dags:/opt/airflow/dags \
-            -v ${{ github.workspace }}/python:/opt/python/ \
+            -v ${{ github.workspace }}/python:/opt/airflow/python \
+            -v ${{ github.workspace }}/ci:/opt/ci \
             -e AIRFLOW__CORE__LOAD_EXAMPLES=False \
             -e AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////tmp/ci_airflow.db \
             airflow-app:ci \
-            bash -c "airflow db migrate && python -c \"
-            import sys
-            from airflow.models import DagBag
-            db = DagBag(dag_folder='/opt/airflow/dags', include_examples=False)
-            if db.import_errors:
-                for f, e in db.import_errors.items():
-                    print(f'{f}: {e}')
-                sys.exit(1)
-            print(f'{len(db.dags)} DAG(s) imported successfully')
-            \""
-      - name: Run python unit tests
-        run: |
-                docker run --rm \
-                    -v ${{ github.workspace }}/python:/opt/airflow/python \
-                    -w /opt/airflow/python \
-                    airflow-app:ci \
-                    bash -c "pip install --quiet pytest && pytest -q"
-                # Remove the pytest step (or add `continue-on-error: true`) until a tests/ folder exists.
+            bash -c "airflow db migrate && python /opt/ci/validate_dags.py"
+
+      # - name: Run python unit tests
+      #   run: |
+      #             docker run --rm \
+      #                 -v $ {{ github.workspace }}/python:/opt/airflow/python \
+      #                 -w /opt/airflow/python \
+      #                 airflow-app:ci \
+      #                 bash -c "pip install --quiet pytest && pytest -q"
+      #             # Remove the pytest step (or add `continue-on-error: true`) until a tests/ folder exists.
