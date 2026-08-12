@@ -1,14 +1,15 @@
 from airflow import DAG
-from airflow.operators import BashOperator
-from airflow.utils.dates import days_ago
+from airflow.providers.standard.operators.bash import BashOperator
+
+from datetime import datetime, timedelta
 
 with DAG(
     dag_id='dbt_transformations',
-    schedule_interval='@daily',
-    start_date=days_ago(1),
+    schedule='@daily',                          
+    start_date=datetime(2025, 1, 1),  
     catchup=False,
     tags=['dbt', 'transform'],
-) as dag:
+    ) as dag:
     install_deps = BashOperator(
         task_id='dbt_deps',
         bash_command='cd /opt/sql/qntplatform && dbt deps',
@@ -25,4 +26,3 @@ with DAG(
     )
 
     install_deps >> run_dbt >> test_dbt
-
