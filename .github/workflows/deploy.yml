@@ -29,9 +29,10 @@ jobs:
           file: infrastructure/docker/Dockerfile
           push: true
           tags: ${{ secrets.GCP_ZONE }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/airflow/airflow:latest
+          no-cache: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          
+
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
