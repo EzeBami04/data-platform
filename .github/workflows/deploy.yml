@@ -64,8 +64,8 @@ jobs:
           gcloud compute scp \
             infrastructure/docker/compose.yml \
             "ezekiel_sanmabo@${{ secrets.GCP_VM_NAME }}:/home/analystbami30/airflow/compose.yml" \
-            --zone="${ { secrets.GCP_ZONE }}" \
-            --project="${ { secrets.GCP_PROJECT_ID }}"
+            --zone="${{ secrets.GCP_ZONE }}" \
+            --project="${{ secrets.GCP_PROJECT_ID }}"
 
       - name: Deploy to VM
         run: |
