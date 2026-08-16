@@ -34,42 +34,42 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/airflow-dbt-app:${{ github.sha }}
           no-cache: true
 
-  deploy:
-    needs: build-and-push
-    runs-on: ubuntu-latest
+  # deploy:
+  #   needs: build-and-push
+  #   runs-on: ubuntu-latest
 
-    steps:
+  #   steps:
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
 
-      - name: Authenticate to GCP
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+  #     - name: Authenticate to GCP
+  #       uses: google-github-actions/auth@v2
+  #       with:
+  #         credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Set up gcloud CLI
-        uses: google-github-actions/setup-gcloud@v2
+  #     - name: Set up gcloud CLI
+  #       uses: google-github-actions/setup-gcloud@v2
 
-      - name: Copy Compose file to VM
-        run: |
-          gcloud compute scp \
-            infrastructure/docker/compose.yml \
-            "analystbami30@${{ secrets.GCP_VM_NAME }}:/home/analystbami30/airflow/compose.yml" \
-            --zone="${{ secrets.GCP_ZONE }}" \
-            --project="${{ secrets.GCP_PROJECT_ID }}"
+  #     - name: Copy Compose file to VM
+  #       run: |
+  #         gcloud compute scp \
+  #           infrastructure/docker/compose.yml \
+  #           "analystbami30@${ { secrets.GCP_VM_NAME }}:/home/analystbami30/airflow/compose.yml" \
+  #           --zone="${ { secrets.GCP_ZONE }}" \
+  #           --project="${ { secrets.GCP_PROJECT_ID }}"
 
-      - name: Copy deploy script to VM
-        run: |
-          gcloud compute scp \
-            infrastructure/docker/compose.yml \
-            "ezekiel_sanmabo@${{ secrets.GCP_VM_NAME }}:/home/analystbami30/airflow/compose.yml" \
-            --zone="${{ secrets.GCP_ZONE }}" \
-            --project="${{ secrets.GCP_PROJECT_ID }}"
+  #     - name: Copy deploy script to VM
+  #       run: |
+  #         gcloud compute scp \
+  #           infrastructure/docker/compose.yml \
+  #           "ezekiel_sanmabo@${ { secrets.GCP_VM_NAME }}:/home/analystbami30/airflow/compose.yml" \
+  #           --zone="${ { secrets.GCP_ZONE }}" \
+  #           --project="${ { secrets.GCP_PROJECT_ID }}"
 
-      - name: Deploy to VM
-        run: |
-          gcloud compute ssh "analystbami30@${{ secrets.GCP_VM_NAME }}" \
-            --zone="${{ secrets.GCP_ZONE }}" \
-            --project="${{ secrets.GCP_PROJECT_ID }}" \
-            --command="chmod +x /home/analystbami30/airflow/deploy.sh && bash /home/analystbami30/airflow/deploy.sh"
+  #     - name: Deploy to VM
+  #       run: |
+  #         gcloud compute ssh "analystbami30@${ { secrets.GCP_VM_NAME }}" \
+  #           --zone="${ { secrets.GCP_ZONE }}" \
+  #           --project="${ { secrets.GCP_PROJECT_ID }}" \
+  #           --command="chmod +x /home/analystbami30/airflow/deploy.sh && bash /home/analystbami30/airflow/deploy.sh"
