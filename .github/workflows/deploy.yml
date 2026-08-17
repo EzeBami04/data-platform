@@ -73,3 +73,4 @@ jobs:
             --zone="${{ secrets.GCP_ZONE }}" \
             --project="${{ secrets.GCP_PROJECT_ID }}" \
             --command="chmod +x /home/analystbami30/airflow/deploy.sh && bash /home/analystbami30/airflow/deploy.sh"
+          

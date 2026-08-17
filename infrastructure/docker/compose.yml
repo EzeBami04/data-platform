@@ -22,9 +22,9 @@ x-airflow-common: &airflow-common
 services:
   postgres:
     image: postgres:16
-    restart: unless-stopped   # add — currently missing, won't survive a VM reboot
-    mem_limit: 512m           # add — tune after checking `docker stats` on the VM
-    cpus: 0.5                 # add
+    restart: unless-stopped   
+    mem_limit: 512m           
+    cpus: 0.5               
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
@@ -55,8 +55,8 @@ services:
     <<: *airflow-common
     command: api-server
     restart: always
-    mem_limit: 1g              # add
-    cpus: 1.0                  # add
+    mem_limit: 1g             
+    cpus: 1.0                  
     ports:
       - "8080:8080"
 
@@ -64,8 +64,8 @@ services:
     <<: *airflow-common
     command: scheduler
     restart: always
-    mem_limit: 512m            # add
-    cpus: 0.5                  # add
+    mem_limit: 512m           
+    cpus: 0.5                  
   airflow-dag-processor:
     <<: *airflow-common
 
