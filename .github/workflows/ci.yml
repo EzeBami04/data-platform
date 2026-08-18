@@ -1,6 +1,7 @@
 # .github/workflows/ci.yml
 # Builds the Airflow image and validates that every DAG imports cleanly.
 # Runs on every push/PR to main; deploy.yml handles actually shipping it.
+# 17/8 deleted Old docekr image
 
 name: CI
 
@@ -18,7 +19,7 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
+      
       - name: Build Airflow image
         uses: docker/build-push-action@v6
         with:
