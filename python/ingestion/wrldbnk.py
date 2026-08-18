@@ -12,8 +12,19 @@ def get_data():
         resp = requests.get(url, params={"limit": 1})
         resp.raise_for_status()
         data = resp.json()
-        total_rec = data['total']
-        return print(total_rec)
+        total_rec = int(data['total'])
+        docs = (data.get('documents'))
+        msdoc = {}
+        rec = 0
+        
+        # while True:
+        #     for docs in data:
+        #         id = docs.get('id')
+        #     rec += 1
+        #     if rec == total_rec:
+        #         break
+
+        return print(data)
     except HTTPError as e:
         print(f"{e}")
 

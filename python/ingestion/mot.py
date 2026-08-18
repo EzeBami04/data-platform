@@ -17,10 +17,14 @@ def get_json(rs_id):
     url = os.getenv("base_url")
     if not url:
         return ValueError("url missing")
-    total_rec = requests.get(url, params=param)
-    total_rec.raise_for_status()
-    data = total_rec.json()['results']['total']
-    return print(data)
+    try:
+        rec = requests.get(url, params=param)
+        rec.raise_for_status()
+        data = rec.json()
+        
+        return print(data)
+    except HTTPError as e:
+        print(f"{e}")
 
 if __name__=="__main__":
     mot = os.getenv("mot_submodel")
