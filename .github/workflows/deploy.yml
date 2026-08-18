@@ -62,7 +62,7 @@ jobs:
       - name: Copy deploy script to VM
         run: |
           gcloud compute scp \
-            infrastructure/docker/deploy.sh \
+            infrastructure/scripts/docker/deploy.sh \
             "analystbami30@${{ secrets.GCP_VM_NAME }}:/home/analystbami30/airflow/deploy.sh" \
             --zone="${{ secrets.GCP_ZONE }}" \
             --project="${{ secrets.GCP_PROJECT_ID }}"
